@@ -1,0 +1,9 @@
+---
+- name: Systemd reload config
+  systemd:
+    daemon_reload: yes
+
+- name: Restart temp-sensor-service
+  service:
+    name: temp-sensor-service
+    state: restarted

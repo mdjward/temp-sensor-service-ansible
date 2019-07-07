@@ -1,0 +1,18 @@
+---
+temp_sensor_service:
+  repo:
+    remote_url: https://github.com/mdjward/temp-sensor-service
+    local_path: /opt/temp-sensor-service
+  socket:
+    nginx_get_proxy: /var/run/nginx.temp-sensor-get-proxy.sock
+    uwsgi: /var/run/uwsgi.temp-sensor-service.sock
+  sensor:
+    device_name: DHT22
+    gpio_pin: 4
+  service:
+    definition_path: /lib/systemd/system/temp-sensor-service.service
+    mount_point: /
+    urls:
+      reading_create: /reading
+      current_reading_get: /reading/current
+

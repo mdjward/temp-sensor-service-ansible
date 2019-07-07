@@ -1,0 +1,6 @@
+---
+dependencies:
+  - role: zerotao.packages
+    become: yes
+  - role: geerlingguy.pip
+    become: yes

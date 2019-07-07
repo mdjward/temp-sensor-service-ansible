@@ -1,0 +1,42 @@
+---
+- name: Delete target directory in preparation for clone
+  file:
+    path: "{{ temp_sensor_service.repo.local_path }}"
+    state: absent
+
+- name: Create target directory
+  file:
+    path: "{{ temp_sensor_service.repo.local_path }}"
+    state: directory
+    recurse: yes
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Clone temp sensor service from GitHub
+  git:
+    repo: "{{ temp_sensor_service.repo.remote_url }}"
+    dest: "{{ temp_sensor_service.repo.local_path }}"
+    version: master
+
+- name: Build setup.py dependencies
+  shell: "{{ ansible_python_interpreter }} setup.py build"
+  args:
+    chdir: "{{ temp_sensor_service.repo.local_path }}"
+
+- name: Prepare systemd file
+  template:
+    src: "temp-sensor.service.j2"
+    dest: "{{ temp_sensor_service.service.definition_path }}"
+
+- name: Force immediate systemd reload of configurations
+  systemd:
+    daemon_reload: yes
+
+- name: Enable temp-sensor-service
+  service:
+    name: temp-sensor-service
+    enabled: yes
+  notify:
+    - "Systemd reload config"
+    - "Restart temp-sensor-service"
