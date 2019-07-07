@@ -1,0 +1,4 @@
+- src: archf.openssh-server
+- src: zerotao.packages
+- src: geerlingguy.pip
+- src: geerlingguy.nginx
