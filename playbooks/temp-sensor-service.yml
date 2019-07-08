@@ -1,0 +1,27 @@
+---
+- hosts: all
+  gather_facts: all
+  pre_tasks:
+    - name: Install Python
+      raw: "test -e /usr/bin/python3 || (sudo apt-get -y update && sudo apt-get install -fy python3)"
+      changed_when: no
+
+- hosts: all
+  pre_tasks:
+    - name: Add authorized key
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ item }}"
+        state: present
+      with_file: "{{ user_public_key_files }}"
+  roles:
+    - role: archf.openssh-server
+      become: yes
+
+- hosts: all
+  roles:
+    - role: temp-sensor-service-uwsgi
+      become: yes
+    - role: geerlingguy.nginx
+      become: yes
+
