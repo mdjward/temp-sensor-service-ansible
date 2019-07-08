@@ -1,0 +1,1 @@
+Ansible playbook to provision an IoT device (nominally a Raspberry Pi, but others are supported) with the [Adafruit-derived temperature sensor service](https://github.com/mdjward/temp-sensor-service).
