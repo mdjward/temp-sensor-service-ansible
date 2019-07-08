@@ -1,0 +1,5 @@
+---
+ansible_user: pi
+sshd_Port: 22
+sshd_PermitRootLogin: 'no'
+sshd_PasswordAuthentication: 'yes'

@@ -1,0 +1,26 @@
+---
+nginx_user: www-data
+nginx_service_state: reloaded
+nginx_service_enabled: yes
+nginx_vhosts:
+  - listen: "unix:/var/run/nginx.temp-sensor-get-proxy.sock"
+    server_name: temp-sensor-uwsgi
+    filename: 010-temp-sensor-uwsgi.conf
+    extra_parameters: |
+      location / {
+        try_files $uri @flask;
+      }
+
+      location @flask {
+        include uwsgi_params;
+        uwsgi_pass unix:/var/run/uwsgi.temp-sensor-service.sock;
+      }
+
+  - listen: "80"
+    server_name: post-as-get-proxy
+    filename: "020-post-as-get-proxy.conf"
+    extra_parameters: |
+      location /readings {
+        proxy_pass http://unix:/var/run/nginx.temp-sensor-get-proxy.sock:/reading;
+        proxy_method POST;
+      }
