@@ -1,0 +1,3 @@
+temp_sensor_service_nginx_proxy:
+  service_definition_file: /lib/systemd/system/nginx.service
+  retry_signal_spec: "TERM/5/KILL/5"

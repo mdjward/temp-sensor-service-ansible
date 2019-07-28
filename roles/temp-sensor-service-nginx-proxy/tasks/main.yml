@@ -1,0 +1,9 @@
+- name: Ensure Unix socket files will terminate correctly
+  replace:
+    path: "{{ temp_sensor_service_nginx_proxy.service_definition_file }}"
+    regexp: "^(ExecStop.-/sbin/start-stop-daemon --quiet --stop) --retry ([^ ]+) (--pidfile ([^ ]+))$"
+    replace: '\1 --retry={{ temp_sensor_service_nginx_proxy.retry_signal_spec }} \3'
+  notify:
+    - Systemd reload config
+    - Restart nginx
+

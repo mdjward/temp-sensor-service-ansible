@@ -20,8 +20,5 @@
 
 - hosts: all
   roles:
-    - role: temp-sensor-service-uwsgi
+    - role: temp-sensor-service-nginx-proxy
       become: yes
-    - role: geerlingguy.nginx
-      become: yes
-

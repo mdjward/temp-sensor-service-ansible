@@ -1,0 +1,6 @@
+---
+dependencies:
+  - role: temp-sensor-service-uwsgi
+    become: yes
+  - role: geerlingguy.nginx
+    become: yes
