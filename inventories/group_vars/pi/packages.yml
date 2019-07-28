@@ -14,5 +14,5 @@ pip_executable: pip3
 pip_install_packages:
   - name: uwsgi
     state: latest
-  - name: Adafruit_DHT_22
+  - name: Adafruit-DHT
     state: latest
