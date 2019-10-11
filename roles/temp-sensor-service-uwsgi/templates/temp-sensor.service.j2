@@ -10,3 +10,6 @@ User=root
 Group=root
 ExecStart=uwsgi -s {{ temp_sensor_service.socket.uwsgi }} --chown-socket {{ nginx_user }} --strict --need-app --mount /=flask_sensor_app:app
 WorkingDirectory={{ temp_sensor_service.repo.local_path }}
+
+[Install]
+WantedBy=multi-user.target
